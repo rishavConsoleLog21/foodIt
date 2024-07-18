@@ -7,6 +7,7 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
+import Provider from "./Provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,15 +21,7 @@ export default function RootLayout({ children }) {
     <ClerkProvider>
       <html lang="en">
         <body className={inter.className}>
-          <header>
-            <SignedIn>
-              <UserButton afterSwitchSessionUrl="/"/>
-            </SignedIn>
-            <SignedOut>
-              <SignInButton />
-            </SignedOut>
-          </header>
-          <main>{children}</main>
+          <Provider>{children}</Provider>
         </body>
       </html>
     </ClerkProvider>
