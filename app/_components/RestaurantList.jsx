@@ -4,8 +4,10 @@ import React, { useEffect, useState } from "react";
 import GlobalApi from "../_utils/GlobalApi";
 import RestaurantItem from "./RestaurantItem";
 import RestaurantItemSkelton from "./RestaurantSkelton";
+import { v4 as uuidv4 } from 'uuid';
 
 function RestaurantList() {
+  const id = uuidv4();
   const params = useSearchParams();
   const [category, setCategory] = useState('all');
   const [restaurantList, setRestaurantList] = useState([]);
@@ -31,7 +33,7 @@ function RestaurantList() {
   return (
     <div className="mt-5">
       {category === "all" ? (<h2 className="flex flex-row font-bold text-2xl items-center justify-center">All Popular Restaurants</h2>): (<h2 className="flex flex-row font-bold text-2xl items-center justify-center">Popular {category} Restaurants</h2>)}
-      <h2 className="font-bold text-primary">{restaurantList?.length} Results</h2>
+      <h2 key={id} className="font-bold text-primary">{restaurantList?.length} Results</h2>
 
       <div
         className="grid grid-cols-1
@@ -46,7 +48,7 @@ function RestaurantList() {
               <RestaurantItem key={index} restaurant={restaurants} />
             ))
           : [1, 2, 3, 4, 5, 6, 7, 8].map((item, index) => (
-              <RestaurantItemSkelton />
+              <RestaurantItemSkelton key={index}/>
             ))}
       </div>
     </div>

@@ -36,6 +36,7 @@ function Header() {
       (resp) => {
         console.log(resp);
         setCart(resp?.userCarts);
+        setUpdateCart(false);
       }
     );
   };
