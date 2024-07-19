@@ -46,4 +46,102 @@ const GetRestaurant = async (category) => {
   return result;
 };
 
-export default { GetCategory, GetRestaurant };
+const GetRestaurantDetails = async (restaurantSlug) => {
+  const query =
+    gql`
+    query RestaurantDetail {
+      restaurant(where: { slug: "` +
+    restaurantSlug +
+    `" }) {
+        aboutUs
+        address
+        banner {
+          url
+        }
+        categories {
+          name
+        }
+        id
+        name
+        restroType
+        slug
+        workingHours
+        menu {
+          ... on Menu {
+            id
+            category
+            menuItem {
+              ... on MenuItem {
+                id
+                name
+                description
+                price
+                productImage {
+                  url
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  const result = await request(MASTER_URL, query);
+  return result;
+};
+
+const AddToCart=async(data)=>{
+  const query=gql`
+  mutation AddToCart {
+    createUserCart(
+      data: {email: "`+data?.email+`", price: `+data.price+`, 
+      productDescription: "`+data.description+`", productImage: "`+data.productImage+`", 
+      productName: "`+data.name+`"
+      restaurant: {connect: {slug: "`+data.restaurantSlug+`"}}}
+    ) {
+      id
+    }
+    publishManyUserCarts(to: PUBLISHED) {
+      count
+    }
+  }
+  
+  `
+  const result=await request(MASTER_URL,query);
+  return result;
+}
+
+const GetUserCart = async (userEmail) => {
+  const query =
+    gql`
+  query GetUserCart {
+    userCarts(where: {email: "` +
+    userEmail +
+    `"}) {
+      id
+      price
+      productDescription
+      productImage
+      productName
+      restaurant {
+        name
+        banner {
+          url
+        }
+        slug
+      }
+    }
+  }
+  `;
+  const result = await request(MASTER_URL, query);
+  return result;
+};
+
+export default {
+  GetCategory,
+  GetRestaurant,
+  GetRestaurantDetails,
+  AddToCart,
+  GetUserCart,
+};
