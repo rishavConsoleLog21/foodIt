@@ -10,7 +10,7 @@ function Header() {
 
   return (
     <div className="flex justify-between items-center py-6 shadow-sm">
-      <Image src="/logo.jpg" alt="Vecteezy.com" width={50} height={50} />
+      <Image src="/logo.png" alt="Vecteezy.com" width={50} height={50} />
       <div className="hidden md:flex border p-2 rounded-lg bg-gray-100 w-96">
         <input
           type="text"

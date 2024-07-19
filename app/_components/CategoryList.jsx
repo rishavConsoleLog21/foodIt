@@ -21,7 +21,6 @@ function CategoryList() {
 
   const getCategoryList = () => {
     GlobalApi.GetCategory().then((resp) => {
-      console.log(resp.categories);
       setCategoryList(resp.categories);
     });
   };
