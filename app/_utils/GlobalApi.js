@@ -166,6 +166,51 @@ const DeleteItemFromCart = async (id) => {
   return result;
 };
 
+
+const CreateNewOrder=async(data)=>{
+  const query=gql`
+  mutation CreateNewOrder {
+    createOrder(
+      data: {email: "`+data.email+`", 
+      orderAmount: `+data.orderAmount+`, 
+      restaurantName: "`+data.restaurantName+`", 
+      userName: "`+data.userName+`", 
+      phone: "`+data.phone+`", 
+      address: "`+data.address+`", 
+      zipCode: "`+data.zipCode+`"}
+    ) {
+      id
+    }
+  }
+  `
+  const result=await request(MASTER_URL,query);
+  return result;
+}
+
+const UpdateOrderToAddOrderItems=async(name,price,id,email)=>{
+  const query=gql`
+  mutation UpdateOrderWithDetail {
+    updateOrder(
+      data: {orderDetail: {create: {OrderItem: 
+        {data: {name: "`+name+`", price: `+price+`}}}}}
+      where: {id: "`+id+`"}
+    ) {
+      id
+    }
+    publishManyOrders(to: PUBLISHED) {
+      count
+    }
+   
+      deleteManyUserCarts(where: {email: "`+email+`"}) {
+        count
+      }
+       
+  }
+  `
+  const result=await request(MASTER_URL,query);
+  return result;
+}
+
 export default {
   GetCategory,
   GetRestaurant,
@@ -173,5 +218,7 @@ export default {
   AddToCart,
   GetUserCart,
   DisconnectRestroFromUserCartItem,
-  DeleteItemFromCart
+  DeleteItemFromCart,
+  CreateNewOrder,
+  UpdateOrderToAddOrderItems,
 };
