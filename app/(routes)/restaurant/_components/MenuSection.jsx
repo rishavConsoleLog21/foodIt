@@ -32,7 +32,6 @@ function MenuSection({ restaurant }) {
       price: item?.price,
       restaurantSlug: restaurant.slug,
     };
-    console.log(data);
     GlobalApi.AddToCart(data)
       .then(
         (resp) => {

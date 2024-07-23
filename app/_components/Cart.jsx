@@ -23,7 +23,6 @@ function Cart({ cart }) {
         console.log(resp);
         if (resp) {
           GlobalApi.DeleteItemFromCart(id).then((resp) => {
-            console.log(resp);
             toast("Item Removed!");
             setUpdateCart(!updateCart);
           });
@@ -31,7 +30,6 @@ function Cart({ cart }) {
       })
       .catch((error) => {
         toast("Error while removing item from cart");
-        console.log("Error while removing item from cart", error);
       });
   };
   return (

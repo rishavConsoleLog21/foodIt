@@ -14,7 +14,6 @@ const RestaurantDetails = () => {
 
   const GetRestaurantDetail = async (restroSlug) => {
     GlobalApi.GetRestaurantDetails(restroSlug).then((res) => {
-      console.log(res);
       setRestaurant(res.restaurant);
     });
   };

@@ -27,16 +27,14 @@ function Header() {
   const { updateCart, setUpdateCart } = useContext(CartUpdateContext);
   const [cart, setCart] = useState([]);
   useEffect(() => {
-    console.log("Execute Me!");
     user && GetUserCart();
   }, [updateCart || user]);
 
   const GetUserCart = () => {
     GlobalApi.GetUserCart(user?.primaryEmailAddress.emailAddress).then(
       (resp) => {
-        console.log(resp);
         setCart(resp?.userCarts);
-        setUpdateCart(false);
+        setUpdateCart(resp?.userCarts);
       }
     );
   };
